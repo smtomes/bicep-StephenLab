@@ -1,15 +1,12 @@
 param location string = resourceGroup().location
-// param uamiName string = 'UAMIScripts'
-// param currentTime string = utcNow()
+param uamiName string = 'UAMIScripts'
+param currentTime string = utcNow()
 param randomString string = uniqueString(resourceGroup().id)
 param storageAccountName string = 'bicepps${randomString}'
 
-
-/*
 resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: uamiName
 }
-*/
 
 resource HostPool 'Microsoft.DesktopVirtualization/hostPools@2022-04-01-preview' = {
   name: 'Bicep_Test'
@@ -81,7 +78,6 @@ resource StorageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   }
 }
 
-/*
 resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'run_script'
   location: location
@@ -101,10 +97,9 @@ $DeploymentScriptOutputs["output"] = New-AzStorageContext -UseConnectedAccount -
     | Get-AzStorageBlob -Container 'images' -Blob * | Out-String
 '''
     
-    arguments: concat('-StorageAccountName',' ',StorageAccount.name)
+    arguments: '-StorageAccountName ${StorageAccount.name}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'PT4H'
     forceUpdateTag: currentTime
   }
 }
-*/
