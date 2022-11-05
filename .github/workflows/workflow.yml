@@ -10,6 +10,7 @@ env:
     AZURE_RESOURCEGROUP_NAME: 'StephenLab'
     LOCATION: 'southcentralus'
     UAMI_NAME: 'UAMIScripts'
+    AVD_SECURITY_GROUP: 'AVD Users - Multi Session'
 
 jobs:
   deploy:
@@ -28,3 +29,4 @@ jobs:
         parameters: 
                    location=${{ env.LOCATION }}
                    uamiName=${{ env.UAMI_NAME }}
+                   avdSecurityGroup=${{avdSecurityGroup}}

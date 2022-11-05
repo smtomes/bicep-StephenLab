@@ -3,6 +3,7 @@ param uamiName string = 'UAMIScripts'
 param currentTime string = utcNow()
 param randomString string = uniqueString(resourceGroup().id)
 param storageAccountName string = 'bicepps${randomString}'
+param avdSecurityGroup string = 'AVD Users - Multi Session'
 
 resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: uamiName
@@ -91,13 +92,22 @@ resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   properties: {
     azPowerShellVersion: '8.0'
     scriptContent: '''
-Param([string] $storageAccountName)
-Connect-AzAccount -Identity
-$DeploymentScriptOutputs["output"] = New-AzStorageContext -UseConnectedAccount -StorageAccountName $storageAccountName `
-    | Get-AzStorageBlob -Container 'images' -Blob * | Out-String
+Param([string] $AVD_Security_Group)
+Param([string] $Resource_Group)
+Param([string] $AVD_Application_Group)
+$AVD_Security_Group_ID = $( Get-AzADGroup | Where-Object { $_.DisplayName -eq $AVD_Security_Group } ).Id
+Get-AzWvdApplicationGroup -Name $AVD_Application_Group -ResourceGroupName $Resource_Group
+Get-AzRoleAssignment | Where-Object { $_.DisplayName -match "AVD Users"}
+New-AzRoleAssignment `
+-ObjectId  $AVD_Security_Group_ID `
+-RoleDefinitionName "Desktop Virtualization User" `
+-ResourceName $AVD_Application_Group `
+-ResourceGroupName $Resource_Group
+-ResourceType 'Microsoft.DesktopVirtualization/applicationGroups'
+
 '''
     
-    arguments: '-StorageAccountName ${StorageAccount.name}'
+    arguments: '-eq ${avdSecurityGroup}, -ResourceGroupName ${resourceGroup().name}, -ResourceName ${ApplicationGroup.name}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'PT4H'
     forceUpdateTag: currentTime
