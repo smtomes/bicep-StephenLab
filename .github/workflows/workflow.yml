@@ -9,7 +9,7 @@ permissions:
 env:
     AZURE_RESOURCEGROUP_NAME: 'StephenLab'
     LOCATION: 'southcentralus'
-    UAMI_NAME: 'UAMIScripts'
+    # UAMI_NAME: 'UAMIScripts'
 
 jobs:
   deploy:
@@ -27,4 +27,4 @@ jobs:
         template: ./main.bicep
         parameters: 
                    location=${{ env.LOCATION }}
-                   uamiName=${{ env.UAMI_NAME }}
+                   # uamiName=${{ env.UAMI_NAME }}
