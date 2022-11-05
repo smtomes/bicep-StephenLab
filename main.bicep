@@ -1,9 +1,9 @@
 param location string = resourceGroup().location
-param uamiName string = 'UAMIScripts'
+// param uamiName string = 'UAMIScripts'
 param currentTime string = utcNow()
 param randomString string = uniqueString(resourceGroup().id)
 param storageAccountName string = 'bicepps${randomString}'
-param avdSecurityGroup string = 'AVD Users - Multi Session'
+// param avdSecurityGroup string = 'AVD Users - Multi Session'
 
 resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: uamiName
@@ -79,6 +79,7 @@ resource StorageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   }
 }
 
+/*
 resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'run_script'
   location: location
@@ -113,3 +114,4 @@ New-AzRoleAssignment `
     forceUpdateTag: currentTime
   }
 }
+*/
