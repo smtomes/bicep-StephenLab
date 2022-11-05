@@ -1,0 +1,34 @@
+name: deploy-bicep-test
+
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+    AZURE_RESOURCEGROUP_NAME: 'F8TechAzureVMs'
+    LOCATION: 'southcentralus'
+    UAMI_NAME: 'UAMIScripts'
+    # CURRENT_TIME: 'utcNow()'
+    # STORAGE_ACCOUNT_NAME: 'concat('bicepps',uniqueString(resourceGroup().id))'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        enable-AzPSSession: true
+    - uses: azure/arm-deploy@v1
+      with:
+        deploymentName: ${{ github.run_number }}
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./main.bicep
+        parameters: 
+                   location=${{ env.LOCATION }}
+                   uamiName=${{ env.UAMI_NAME }}
+                   # currentTime=${{ env.CURRENT_TIME }}
+                   # storageAccountName=${{ env.STORAGE_ACCOUNT_NAME }}
