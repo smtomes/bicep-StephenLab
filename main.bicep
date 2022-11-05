@@ -103,7 +103,7 @@ resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     -ResourceGroupName $Resource_Group `
     -ResourceType 'Microsoft.DesktopVirtualization/applicationGroups'
 '''
-    arguments: '-eq ${avdSecurityGroup}, -ResourceGroupName ${resourceGroup().name}, -ResourceName ${ApplicationGroup.name}'
+    arguments: '-eq ${avdSecurityGroup} -ResourceGroupName ${resourceGroup().name} -ResourceName ${ApplicationGroup.name}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'PT4H'
     forceUpdateTag: currentTime
