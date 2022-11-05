@@ -1,13 +1,15 @@
 param location string = resourceGroup().location
 // param uamiName string = 'UAMIScripts'
-param currentTime string = utcNow()
+// param currentTime string = utcNow()
 param randomString string = uniqueString(resourceGroup().id)
 param storageAccountName string = 'bicepps${randomString}'
 // param avdSecurityGroup string = 'AVD Users - Multi Session'
 
+/*
 resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: uamiName
 }
+*/
 
 resource HostPool 'Microsoft.DesktopVirtualization/hostPools@2022-04-01-preview' = {
   name: 'Bicep_Test'
