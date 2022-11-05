@@ -1,1 +1,2 @@
 az ad sp create-for-rbac --name "Bicep Deployments ( StephenLab )" --role contributor --scopes /subscriptions/af32ce84-b1e3-44c1-bef5-6f2b30749285/resourceGroups/StephenLab --sdk-auth
+az ad sp create-for-rbac --name "Bicep Deployments ( F8TechAzureVMs )" --role contributor --scopes /subscriptions/af32ce84-b1e3-44c1-bef5-6f2b30749285/resourceGroups/F8TechAzureVMs --sdk-auth
