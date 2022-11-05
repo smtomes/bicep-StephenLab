@@ -92,16 +92,24 @@ resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   properties: {
     azPowerShellVersion: '8.0'
     scriptContent: '''
-    Param([string] $AVD_Security_Group)
-    Param([string] $Resource_Group)
-    Param([string] $AVD_Application_Group)
-    $AVD_Security_Group_ID = $( Get-AzADGroup | Where-Object { $_.DisplayName -eq $AVD_Security_Group } ).Id
-    New-AzRoleAssignment `
-    -ObjectId  $AVD_Security_Group_ID `
-    -RoleDefinitionName "Desktop Virtualization User" `
-    -ResourceName $AVD_Application_Group `
-    -ResourceGroupName $Resource_Group `
-    -ResourceType 'Microsoft.DesktopVirtualization/applicationGroups'
+param 
+
+(
+
+    [string] $AVD_Security_Group,
+    [string] $Resource_Group,
+    [string] $AVD_Application_Group
+
+)
+
+$AVD_Security_Group_ID = $( Get-AzADGroup | Where-Object { $_.DisplayName -eq $AVD_Security_Group } ).Id
+
+New-AzRoleAssignment `
+-ObjectId           $AVD_Security_Group_ID `
+-ResourceName       $AVD_Application_Group `
+-ResourceGroupName  $Resource_Group `
+-RoleDefinitionName 'Desktop Virtualization User' `
+-ResourceType       'Microsoft.DesktopVirtualization/applicationGroups'
 '''
     arguments: '-eq ${avdSecurityGroup} -ResourceGroupName ${resourceGroup().name} -ResourceName ${ApplicationGroup.name}'
     cleanupPreference: 'OnSuccess'
@@ -109,4 +117,3 @@ resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     forceUpdateTag: currentTime
   }
 }
-
