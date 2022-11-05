@@ -1,11 +1,13 @@
 param location string = resourceGroup().location
-param uamiName string = 'UAMIScripts'
-param currentTime string = utcNow()
+// param uamiName string = 'UAMIScripts'
+// param currentTime string = utcNow()
 param storageAccountName string = concat('bicepps',uniqueString(resourceGroup().id))
 
+/*
 resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: uamiName
 }
+*/
 
 resource HostPool 'Microsoft.DesktopVirtualization/hostPools@2022-04-01-preview' = {
   name: 'Bicep_Test'

@@ -1,4 +1,4 @@
-name: deploy-bicep-test
+name: bicep-StephenLab
 
 on: [workflow_dispatch]
 
@@ -7,11 +7,9 @@ permissions:
   contents: read
 
 env:
-    AZURE_RESOURCEGROUP_NAME: 'F8TechAzureVMs'
+    AZURE_RESOURCEGROUP_NAME: 'StephenLab'
     LOCATION: 'southcentralus'
     UAMI_NAME: 'UAMIScripts'
-    # CURRENT_TIME: 'utcNow()'
-    # STORAGE_ACCOUNT_NAME: 'concat('bicepps',uniqueString(resourceGroup().id))'
 
 jobs:
   deploy:
@@ -30,5 +28,3 @@ jobs:
         parameters: 
                    location=${{ env.LOCATION }}
                    uamiName=${{ env.UAMI_NAME }}
-                   # currentTime=${{ env.CURRENT_TIME }}
-                   # storageAccountName=${{ env.STORAGE_ACCOUNT_NAME }}
