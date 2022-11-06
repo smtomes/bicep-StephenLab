@@ -26,6 +26,8 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
 
+    - name: Query Azure AD Security Group
+
     - name: Deploy main bicep file
       uses: azure/arm-deploy@v1
       with:
