@@ -12,7 +12,6 @@ env:
     AVD_SECURITY_GROUP: 'AVD Users - Host Pool'
 
 jobs:
-
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
@@ -26,6 +25,9 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
 
+  gather-azure-data:
+    runs-on: ubuntu-latest
+    steps:
     - name: Run Azure PowerShell script
       uses: azure/powershell@v1
       with:
