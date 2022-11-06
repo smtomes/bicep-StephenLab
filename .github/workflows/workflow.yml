@@ -16,13 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: azure/powershell@v1
+    
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
+    - uses: azure/powershell@v1
         inlineScript: |
-        echo "Hello World"
+echo "Hello World"
     - uses: azure/arm-deploy@v1
       with:
         deploymentName: ${{ github.run_number }}
