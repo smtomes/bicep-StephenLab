@@ -26,8 +26,8 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
 
-    - name: blah
-    - uses: actions/checkout@v2
+    - name: Azure PowerShell
+    - uses: azure/powershell@v1
 
     - name: Deploy main bicep file
       uses: azure/arm-deploy@v1
