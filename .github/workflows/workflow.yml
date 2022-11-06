@@ -26,7 +26,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
 
-    - name: Query Azure AD Security Group
+    - name: blah
     - uses: actions/checkout@v2
 
     - name: Deploy main bicep file
