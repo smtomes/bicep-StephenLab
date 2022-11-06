@@ -9,14 +9,11 @@ permissions:
 env:
     AZURE_RESOURCEGROUP_NAME: 'StephenLab'
     LOCATION: 'southcentralus'
-    UAMI_NAME: 'UAMIScripts'
-    # AVD_SECURITY_GROUP: 'AVD Users - Multi Session'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Get Azure AD Security Group
     - uses: actions/checkout@v2
     - uses: azure/login@v1
       with:
@@ -29,5 +26,4 @@ jobs:
         template: ./main.bicep
         parameters: 
                    location=${{ env.LOCATION }}
-                   uamiName=${{ env.UAMI_NAME }}
-                   #avdSecurityGroup=${{env.AVD_SECURITY_GROUP}}
+  
