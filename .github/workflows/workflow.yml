@@ -26,6 +26,7 @@ jobs:
         enable-AzPSSession: true
 
     - name: Azure Script
+        runs-on: ubuntu-latest
         uses: azure/powershell@v1
         Run: |
           $AVD_SECURITY_GROUP_ID = $( Get-AzADGroup -DisplayName $AVD_SECURITY_GROUP ).Id
