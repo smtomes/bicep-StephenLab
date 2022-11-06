@@ -95,9 +95,18 @@ resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
 Connect-AzAccount -Identity
 Get-AzADGroup
 '''
-    arguments: '-eq ${avdSecurityGroup} -ResourceGroupName ${resourceGroup().name} -ResourceName ${ApplicationGroup.name}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'PT4H'
     forceUpdateTag: currentTime
+  }
+}
+
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  scope: storageAccount
+  name: guid(storageAccount.id, principalId, roleDefinitionResourceId)
+  properties: {
+    roleDefinitionId: roleDefinitionResourceId
+    principalId: principalId
+    principalType: 'ServicePrincipal'
   }
 }
