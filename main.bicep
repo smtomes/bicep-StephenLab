@@ -1,5 +1,4 @@
 param location string = resourceGroup().location
-param avdSecurityGroupId string
 
 @description('Principal type of the assignee.')
 @allowed([
@@ -15,7 +14,7 @@ param principalType string = 'Group'
 param RoleDefinitionId string = '1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63'
 
 @description('the id of the principal that would get the permission')
-param principalId string = avdSecurityGroupId
+param avdSecurityGroupId string
 
 @description('the role definition is collected')
 resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
@@ -24,7 +23,7 @@ resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-prev
 }
 
 resource RoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(resourceGroup().id, RoleDefinitionId, principalId)
+  name: guid(resourceGroup().id, RoleDefinitionId, avdSecurityGroupId)
   properties: {
     roleDefinitionId: roleDefinition.id
     principalId: principalId
