@@ -27,6 +27,7 @@ jobs:
         enable-AzPSSession: true
 
     - name: Query Azure AD Security Group
+    - uses: actions/checkout@v2
 
     - name: Deploy main bicep file
       uses: azure/arm-deploy@v1
