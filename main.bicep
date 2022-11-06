@@ -8,7 +8,7 @@ targetScope = 'resourceGroup'
   'ServicePrincipal'
   'User'
 ])
-param principalType string = 'ServicePrincipal'
+param principalType string = 'Group'
 
 @description('the id for the role defintion, to define what permission should be assigned')
 param RoleDefinitionId string = '1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63'
