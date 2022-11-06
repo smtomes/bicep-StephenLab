@@ -96,7 +96,6 @@ param
 
 (
 
-    [string] $AVD_Security_Group,
     [string] $Resource_Group,
     [string] $AVD_Application_Group
 
@@ -104,16 +103,14 @@ param
 
 Connect-AzAccount -Identity
 
-$AVD_Security_Group_ID = $( Get-AzADGroup | Where-Object { $_.DisplayName -eq $AVD_Security_Group } ).Id
-
 New-AzRoleAssignment `
--ObjectId           $AVD_Security_Group_ID `
+-ObjectId           '568cc44f-71c6-41b9-9969-13e988ca5e9c' `
 -ResourceName       $AVD_Application_Group `
 -ResourceGroupName  $Resource_Group `
 -RoleDefinitionName 'Desktop Virtualization User' `
 -ResourceType       'Microsoft.DesktopVirtualization/applicationGroups'
 '''
-    arguments: '-eq ${avdSecurityGroup} -ResourceGroupName ${resourceGroup().name} -ResourceName ${ApplicationGroup.name}'
+    arguments: '-ResourceGroupName ${resourceGroup().name} -ResourceName ${ApplicationGroup.name}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'PT4H'
     forceUpdateTag: currentTime
