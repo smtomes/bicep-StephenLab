@@ -22,7 +22,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
     - uses: azure/powershell@v1
-        inlineScript: |
+      run: |
 echo "Hello World"
     - uses: azure/arm-deploy@v1
       with:
