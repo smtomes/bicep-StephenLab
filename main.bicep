@@ -72,9 +72,11 @@ resource StorageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   }
 }
 
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  scope: ApplicationGroup
+resource RoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid('1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63')
+  dependsOn: [
+    ApplicationGroup
+  ]
   properties: {
     roleDefinitionId: '1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63'
     principalId: 'f0d361e0-dc88-434e-a52e-6e414372c73c'
