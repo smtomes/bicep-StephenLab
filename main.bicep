@@ -96,8 +96,8 @@ param
 
 (
 
-    [string] $Resource_Group,
-    [string] $AVD_Application_Group
+    [string] $ResourceGroup,
+    [string] $AVDApplicationGroup
 
 )
 
@@ -105,8 +105,8 @@ Connect-AzAccount -Identity
 
 New-AzRoleAssignment `
 -ObjectId           '568cc44f-71c6-41b9-9969-13e988ca5e9c' `
--ResourceName       $AVD_Application_Group `
--ResourceGroupName  $Resource_Group `
+-ResourceName       $AVDApplicationGroup `
+-ResourceGroupName  $ResourceGroup `
 -RoleDefinitionName 'Desktop Virtualization User' `
 -ResourceType       'Microsoft.DesktopVirtualization/applicationGroups'
 '''
