@@ -12,15 +12,29 @@ env:
     AVD_SECURITY_GROUP: 'AVD Users - Host Pool'
 
 jobs:
-  deploy:
+
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: azure/login@v1
+
+    - name: Github Code Checkout
+      uses: actions/checkout@v2
+
+    - name: Azure Login
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
-    - uses: azure/arm-deploy@v1
+
+    - name: Azure PowerShell Script
+      uses: azure/Powershell@v1
+      with:
+        azpsversion: latest
+        inlineScript: |
+        echo "Hello World"
+
+    - name: Deploy main bicep file
+      uses: azure/arm-deploy@v1
       with:
         deploymentName: ${{ github.run_number }}
         resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
