@@ -29,3 +29,4 @@ jobs:
         parameters: 
                    location=${{ env.LOCATION }}
                    uamiName=${{ env.UAMI_NAME }}
+                   # avdSecurityGroup=${{env.AVD_SECURITY_GROUP}}

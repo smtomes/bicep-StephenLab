@@ -102,6 +102,8 @@ param
 
 )
 
+Connect-AzAccount -Identity
+
 $AVD_Security_Group_ID = $( Get-AzADGroup | Where-Object { $_.DisplayName -eq $AVD_Security_Group } ).Id
 
 New-AzRoleAssignment `
