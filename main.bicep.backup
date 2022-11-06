@@ -3,7 +3,7 @@ param uamiName string = 'UAMIScripts'
 param currentTime string = utcNow()
 param randomString string = uniqueString(resourceGroup().id)
 param storageAccountName string = 'bicepps${randomString}'
-param avdSecurityGroup string = 'AVD Users - Multi Session'
+// param avdSecurityGroup string = 'AVD Users - Multi Session'
 
 resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: uamiName
@@ -81,6 +81,7 @@ resource StorageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
 
 resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'run_script'
+  dependsOn: [ ApplicationGroup ]
   location: location
   kind: 'AzurePowerShell'
   identity: {
@@ -93,9 +94,14 @@ resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     azPowerShellVersion: '8.0'
     scriptContent: '''
 Connect-AzAccount -Identity
-Get-AzADGroup
+
+New-AzRoleAssignment `
+-ObjectId           '568cc44f-71c6-41b9-9969-13e988ca5e9c' `
+-ResourceName       'BicepTestApplicationGroup' `
+-ResourceGroupName  'StephenLab' `
+-RoleDefinitionName 'Desktop Virtualization User' `
+-ResourceType       'Microsoft.DesktopVirtualization/applicationGroups'
 '''
-    arguments: '-eq ${avdSecurityGroup} -ResourceGroupName ${resourceGroup().name} -ResourceName ${ApplicationGroup.name}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'PT4H'
     forceUpdateTag: currentTime
