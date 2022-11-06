@@ -3,7 +3,7 @@ param uamiName string = 'UAMIScripts'
 param currentTime string = utcNow()
 param randomString string = uniqueString(resourceGroup().id)
 param storageAccountName string = 'bicepps${randomString}'
-param avdSecurityGroup string = 'AVD Users - Multi Session'
+// param avdSecurityGroup string = 'AVD Users - Multi Session'
 
 resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: uamiName
@@ -96,8 +96,8 @@ param
 
 (
 
-    [string] $ResourceGroup,
-    [string] $AVDApplicationGroup
+    [string] $AVDApplicationGroup,
+    [string] $ResourceGroup
 
 )
 
