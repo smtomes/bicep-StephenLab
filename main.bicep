@@ -26,7 +26,7 @@ resource RoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-prev
   name: guid(resourceGroup().id, RoleDefinitionId, avdSecurityGroupId)
   properties: {
     roleDefinitionId: roleDefinition.id
-    principalId: principalId
+    principalId: avdSecurityGroupId
     principalType: principalType
   }
 }
