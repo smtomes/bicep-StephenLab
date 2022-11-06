@@ -10,22 +10,18 @@ env:
     AZURE_RESOURCEGROUP_NAME: 'StephenLab'
     LOCATION: 'southcentralus'
     UAMI_NAME: 'UAMIScripts'
-    AVD_SECURITY_GROUP: 'AVD Users - Multi Session'
+    # AVD_SECURITY_GROUP: 'AVD Users - Multi Session'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:  
+    steps:
+    - name: Get Azure AD Security Group
     - uses: actions/checkout@v2
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
-    - name: Get Azure AD Security Group
-      run: |
-        $AVD_SECURITY_GROUP_ID = $( Get-AzADGroup -DisplayName $AVD_SECURITY_GROUP ).Id
-        echo $( "AVD_SECURITY_GROUP_ID = $AVD_SECURITY_GROUP_ID" ) | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-      shell: pwsh
     - uses: azure/arm-deploy@v1
       with:
         deploymentName: ${{ github.run_number }}
@@ -33,4 +29,5 @@ jobs:
         template: ./main.bicep
         parameters: 
                    location=${{ env.LOCATION }}
-                   avdSecurityGroupId=${{ env.AVD_SECURITY_GROUP_ID }}
+                   uamiName=${{ env.UAMI_NAME }}
+                   #avdSecurityGroup=${{env.AVD_SECURITY_GROUP}}
