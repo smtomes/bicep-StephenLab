@@ -12,26 +12,30 @@ env:
     AVD_SECURITY_GROUP: 'AVD Users - Host Pool'
 
 jobs:
-  build-and-deploy:
+  build-and-login:
     runs-on: ubuntu-latest
     steps:
-
     - name: Github Code Checkout
       uses: actions/checkout@v2
-
     - name: Azure Login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
-
+  run-a-script:
+    runs-on: ubuntu-latest
+    steps:
     - name: Azure PS Script
+        needs: build-and-login
         Run: |
           $AVD_SECURITY_GROUP_ID = $( Get-AzADGroup -DisplayName $AVD_SECURITY_GROUP ).Id
           echo $( "AVD_SECURITY_GROUP_ID = $AVD_SECURITY_GROUP_ID" ) | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
         azPSVersion: "latest"
-
+  run-bicep:
+    runs-on: ubuntu-latest
+    steps:
     - name: Deploy main bicep file
+      needs: run-a-script
       uses: azure/arm-deploy@v1
       with:
         deploymentName: ${{ github.run_number }}
