@@ -1,4 +1,4 @@
-targetScope = 'managementGroup' 
+targetScope = 'resourceGroup' 
 
 @description('Principal type of the assignee.')
 @allowed([
@@ -18,12 +18,12 @@ param principalId string = '568cc44f-71c6-41b9-9969-13e988ca5e9c'
 
 @description('the role deffinition is collected')
 resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
-  scope: managementGroup()
+  scope: resourceGroup()
   name: RoleDefinitionId
 }
 
 resource RoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(managementGroup().id, RoleDefinitionId, principalId)
+  name: guid(resourceGroup().id, RoleDefinitionId, principalId)
   properties: {
     roleDefinitionId: roleDefinition.id
     principalId: principalId
