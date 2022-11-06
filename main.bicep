@@ -1,13 +1,6 @@
 param location string = resourceGroup().location
-param uamiName string = 'UAMIScripts'
-param currentTime string = utcNow()
 param randomString string = uniqueString(resourceGroup().id)
 param storageAccountName string = 'bicepps${randomString}'
-param avdSecurityGroup string = 'AVD Users - Multi Session'
-
-resource ManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
-  name: uamiName
-}
 
 resource HostPool 'Microsoft.DesktopVirtualization/hostPools@2022-04-01-preview' = {
   name: 'Bicep_Test'
@@ -79,34 +72,12 @@ resource StorageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   }
 }
 
-resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-  name: 'run_script'
-  location: location
-  kind: 'AzurePowerShell'
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${ManagedIdentity.id}': {}
-    }
-  }
-  properties: {
-    azPowerShellVersion: '8.0'
-    scriptContent: '''
-Connect-AzAccount -Identity
-Get-AzADGroup
-'''
-    cleanupPreference: 'OnSuccess'
-    retentionInterval: 'PT4H'
-    forceUpdateTag: currentTime
-  }
-}
-
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  scope: storageAccount
-  name: guid(storageAccount.id, principalId, roleDefinitionResourceId)
+  scope: ApplicationGroup
+  name: guid('1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63')
   properties: {
-    roleDefinitionId: roleDefinitionResourceId
-    principalId: principalId
+    roleDefinitionId: '1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63'
+    principalId: 'f0d361e0-dc88-434e-a52e-6e414372c73c'
     principalType: 'ServicePrincipal'
   }
 }
