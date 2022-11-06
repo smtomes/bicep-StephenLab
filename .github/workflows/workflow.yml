@@ -15,14 +15,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checking out repository to Linux runner....
     - uses: actions/checkout@v2
-    - name: Logging Linux runner into Azure....
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
-    - name: Deploying your main.bicep template.
     - uses: azure/arm-deploy@v1
       with:
         deploymentName: ${{ github.run_number }}
