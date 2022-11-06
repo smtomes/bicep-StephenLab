@@ -92,25 +92,15 @@ resource Script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   properties: {
     azPowerShellVersion: '8.0'
     scriptContent: '''
-param 
-
-(
-
-    [string] $AVDApplicationGroup,
-    [string] $ResourceGroup
-
-)
-
 Connect-AzAccount -Identity
 
 New-AzRoleAssignment `
 -ObjectId           '568cc44f-71c6-41b9-9969-13e988ca5e9c' `
--ResourceName       $AVDApplicationGroup `
--ResourceGroupName  $ResourceGroup `
+-ResourceName       'BicepTestApplicationGroup' `
+-ResourceGroupName  'StephenLab' `
 -RoleDefinitionName 'Desktop Virtualization User' `
 -ResourceType       'Microsoft.DesktopVirtualization/applicationGroups'
 '''
-    arguments: '-ResourceGroupName ${resourceGroup().name} -ResourceName ${ApplicationGroup.name}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'PT4H'
     forceUpdateTag: currentTime
