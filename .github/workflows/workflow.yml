@@ -26,8 +26,12 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
 
-    - name: Azure PowerShell
-    - uses: azure/powershell@v1
+    - name: Run Azure PowerShell script
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          Get-AzVM -ResourceGroupName "ResourceGroup11"
+        azPSVersion: "latest"
 
     - name: Deploy main bicep file
       uses: azure/arm-deploy@v1
