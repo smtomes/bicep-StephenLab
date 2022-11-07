@@ -34,7 +34,7 @@ jobs:
       with:
         inlineScript: |
           $Group_ObjectId = $( Get-AzADGroup -DisplayName '${{ env.AVD_SECURITY_GROUP }}' ).Id
-          echo "AVD_SECURITY_GROUP_ID=$Group_Object_Id | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "AVD_SECURITY_GROUP_ID=$Group_Object_Id" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         azPSVersion: latest
         
     - name: Deploy main bicep file
