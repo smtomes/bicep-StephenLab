@@ -30,9 +30,9 @@ jobs:
         enable-AzPSSession: true
 
     - name: Azure Script
-        id: run-azure-script
       uses: azure/powershell@v1
       with:
+        id: run-azure-script
         inlineScript: |
           $GroupObjectId = $( Get-AzADGroup -DisplayName '${{ env.AVD_SECURITY_GROUP }}' ).Id
           echo "ID=$GroupObjectId" >> $env:GITHUB_OUTPUT
