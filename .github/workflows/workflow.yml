@@ -32,10 +32,9 @@ jobs:
     - name: Azure Script
       uses: azure/powershell@v1
       with:
-        id: run-azure-script
         inlineScript: |
           $GroupObjectId = $( Get-AzADGroup -DisplayName '${{ env.AVD_SECURITY_GROUP }}' ).Id
-          echo "BLAH=$GroupObjectId" >> $env:GITHUB_OUTPUT
+          echo "ID=$( $GroupObjectId )" >> $env:GITHUB_OUTPUT
         azPSVersion: latest
         
     - name: Deploy main bicep file
@@ -46,4 +45,4 @@ jobs:
         template: ./main.bicep
         parameters: 
                    location=${{ env.LOCATION }}
-                   avdSecurityGroupId=${{ steps.run-azure-script.outputs.BLAH }}
+                   avdSecurityGroupId=${{ env.ID }}
