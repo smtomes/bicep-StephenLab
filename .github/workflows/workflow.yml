@@ -26,7 +26,7 @@ jobs:
         enable-AzPSSession: true
 
     - name: Azure Script
-      uses: azure/msgraph@v1
+      uses: azure/powershell@v1
       with:
         inlineScript: |
           $AVD_SECURITY_GROUP_ID = $( $( Get-MgGroup ) | Where-Object { $_.DisplayName -eq "AVD Users - Multi Session" } ).Id
